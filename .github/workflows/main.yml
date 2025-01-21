@@ -1,4 +1,4 @@
-name: .NET Build
+name: .NET Framework Build
 
 on:
   push:
@@ -16,16 +16,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: '4.8.x'
-
-    - name: Restore dependencies
-      run: dotnet restore HDT-Reconnector.sln
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1
 
     - name: Build project
-      run: dotnet build HDT-Reconnector.sln --configuration Release
-      
+      run: msbuild HDT-Reconnector.sln /p:Configuration=Release
+
     - name: Run tests (if any)
-      run: dotnet test HDT-Reconnector.sln --configuration Release
+      run: |
+        vstest.console.exe "**\*.Test.dll" /TestCaseFilter:"TestCategory!=Integration" --logger:trx

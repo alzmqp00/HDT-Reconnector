@@ -24,9 +24,9 @@ jobs:
 
     - name: Build project
       run: msbuild HDT-Reconnector.sln /p:Configuration=Release
-      
+
     - name: Upload Build Artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3  # 更新為 v3
       with:
         name: build-artifacts
         path: |

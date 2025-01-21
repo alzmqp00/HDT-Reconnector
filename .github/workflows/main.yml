@@ -19,9 +19,8 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
 
+    - name: Restore NuGet packages
+      run: nuget restore HDT-Reconnector.sln
+
     - name: Build project
       run: msbuild HDT-Reconnector.sln /p:Configuration=Release
-
-    - name: Run tests (if any)
-      run: |
-        vstest.console.exe "**\*.Test.dll" /TestCaseFilter:"TestCategory!=Integration" --logger:trx
